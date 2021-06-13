@@ -1,0 +1,10 @@
+.search-wrapper {
+    margin: 5px;
+}
+.search-wrapper button {
+    margin-left: 5px;
+}
+.list-wrapper {
+    max-width: 350px;
+    margin: 5px;
+}
