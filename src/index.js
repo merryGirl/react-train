@@ -3,7 +3,9 @@ import React from 'react'
 import ReactDOM, { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import store from './store/index'
-import TodoList2 from './pages/todo-list/index'
+import TodoList from './pages/todo-list/index'
+import { UseStateHooc, UseCallbackHooc, UseMemoParent } from './pages/hooks/index'
+
 
 import 'antd/dist/antd.css'
 
@@ -13,7 +15,10 @@ ReactDOM.render(
     <Provider store={store}>
         <div>
             <h1>React Redux===============</h1>
-            <TodoList2 />
+            <TodoList />
+            <UseStateHooc />
+            <UseCallbackHooc />
+            <UseMemoParent />
         </div>
     </Provider>,
     rootDom

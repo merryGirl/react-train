@@ -12,7 +12,7 @@ import 'antd/dist/antd.css'
 import './index.css'
 
 
-class TodoList2 extends React.Component {
+class TodoList extends React.Component {
 
     constructor(props) {
         super(props)
@@ -77,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList2)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
