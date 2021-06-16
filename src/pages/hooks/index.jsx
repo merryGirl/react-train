@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, useMemo } from 'react'
+import React, { useState, useCallback, memo, useMemo, useReducer } from 'react'
 
 function UseStateHooc () {
     // const [countNum, setCountNum] = useState(0)
@@ -104,8 +104,38 @@ function UseMemoParent () {
     )
 }
 
+// useReducer 案例
+const initState = { num: 1 }
+const INCREMENT = 'INCREMENT'
+const DECREMENT = 'DECREMENT'
+const reducer = function(state, action) {
+    switch(action.type) {
+        case INCREMENT: 
+            return { num: state.num + 1 }
+        case DECREMENT: 
+            return { num: state.num - 1 }
+        default:
+            return state
+    }
+}
+function UseReducerHook () {
+    const [ state, dispatch ] = useReducer(reducer, initState)
+    return (
+        <>
+            <h1>useReducer===================</h1>
+            <div>
+                <div>{state.num}</div>
+                <button onClick={() => dispatch({type: INCREMENT})}>增加</button>
+                <button onClick={() => dispatch({type: DECREMENT})}>减少</button>
+            </div>
+        </>
+    )
+}
+
+
 export {
     UseStateHooc,
     UseCallbackHooc,
-    UseMemoParent
+    UseMemoParent,
+    UseReducerHook
 }

@@ -4,7 +4,12 @@ import ReactDOM, { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import store from './store/index'
 import TodoList from './pages/todo-list/index'
-import { UseStateHooc, UseCallbackHooc, UseMemoParent } from './pages/hooks/index'
+import { 
+    UseStateHooc,
+    UseCallbackHooc,
+    UseMemoParent,
+    UseReducerHook
+} from './pages/hooks/index'
 
 
 import 'antd/dist/antd.css'
@@ -19,6 +24,7 @@ ReactDOM.render(
             <UseStateHooc />
             <UseCallbackHooc />
             <UseMemoParent />
+            <UseReducerHook />
         </div>
     </Provider>,
     rootDom
