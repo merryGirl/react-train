@@ -8,7 +8,8 @@ import {
     UseStateHooc,
     UseCallbackHooc,
     UseMemoParent,
-    UseReducerHook
+    UseReducerHook,
+    MyUseStateHook
 } from './pages/hooks/index'
 
 
@@ -25,6 +26,7 @@ ReactDOM.render(
             <UseCallbackHooc />
             <UseMemoParent />
             <UseReducerHook />
+            <MyUseStateHook />
         </div>
     </Provider>,
     rootDom

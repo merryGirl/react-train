@@ -132,10 +132,37 @@ function UseReducerHook () {
     )
 }
 
+// useState 是 useReducer的语法糖
+function MyUseState(initState) {
+    const reducer = useCallback(function(state, action) {
+        return action
+    })
+    const [ state, dispatch ] = useReducer(reducer, initState)
+    function setState(action) {
+        dispatch(action)
+    }
+    return [ state, setState]
+
+}
+function MyUseStateHook() {
+    const [numConfig, setNumConfig] = MyUseState({num: 0})
+    return (
+        <>
+            <h1>自己写的useState=================</h1>
+            <div>
+                <div>{numConfig.num}</div>
+                <button onClick={() => setNumConfig({ num: numConfig.num + 1 })}>增加</button>
+                <button onClick={() => setNumConfig({ num: numConfig.num - 1 })}>减少</button>
+            </div>
+        </>
+    )
+}
+
 
 export {
     UseStateHooc,
     UseCallbackHooc,
     UseMemoParent,
-    UseReducerHook
+    UseReducerHook,
+    MyUseStateHook
 }
