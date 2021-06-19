@@ -9,7 +9,11 @@ import {
     UseCallbackHooc,
     UseMemoParent,
     UseReducerHook,
-    MyUseStateHook
+    MyUseStateHook,
+    HideUseEffectHook,
+    UseRefParent,
+    LayoutEffectHook,
+    UseLoggerHook
 } from './pages/hooks/index'
 
 
@@ -27,6 +31,10 @@ ReactDOM.render(
             <UseMemoParent />
             <UseReducerHook />
             <MyUseStateHook />
+            <HideUseEffectHook />
+            <UseRefParent />
+            <LayoutEffectHook />
+            <UseLoggerHook />
         </div>
     </Provider>,
     rootDom

@@ -1,4 +1,14 @@
-import React, { useState, useCallback, memo, useMemo, useReducer } from 'react'
+import React, {
+    useState,
+    useCallback,
+    memo,
+    useMemo,
+    useReducer,
+    useEffect,
+    useRef,
+    useImperativeHandle,
+    useLayoutEffect
+} from 'react'
 
 function UseStateHooc () {
     // const [countNum, setCountNum] = useState(0)
@@ -158,11 +168,132 @@ function MyUseStateHook() {
     )
 }
 
+function HideUseEffectHook() {
+    const [show, setShow] = useState(true)
+    return (
+        <>
+            <h1>useEffect 调用==============</h1>
+            <button onClick={() => setShow(!show)}>{!show ? '显示' : '隐藏'}</button>
+            {show && <UseEffectHook /> }
+        </>
+    )
+}
+
+function UseEffectHook() {
+    const [num, setNum] = useState(0)
+    useEffect(() => {
+        let timer = setInterval(() => {
+            // console.log('每秒一次');
+            setNum(x => x + 1)
+        }, 1000)
+
+        // 销毁定时器，避免内存泄漏
+        return () => {
+            console.log('销毁定时器');
+            clearInterval(timer)
+        }
+    }, [])
+
+    return (
+        <>
+            <h1>useEffect=================</h1>
+            <button
+                onClick={() => setNum(num + 1)}>
+                {num}+
+            </button>
+        </>
+    )
+}
+
+
+const RefChild = React.forwardRef((props, ref) => {
+    const childRef = useRef()
+    useImperativeHandle(ref, () => ({
+        focus: () => childRef.current.focus()
+    }))
+    return (
+        <div>
+            <input ref={childRef} type="text" />
+            <button onClick={props.getFocus}>焦点</button>
+        </div>
+    )
+})
+function UseRefParent() {
+    let [number, setNumber] = useState(0)
+    let inputRef = React.useRef()
+    function getFocus() {
+        inputRef.current.focus()
+    } 
+
+    return (
+        <div>
+            <h1>useRef===========================</h1>
+            <RefChild ref={inputRef} getFocus={getFocus} />
+            {number}
+            <button onClick={() => setNumber(x => x + 1)}>+</button>
+        </div>
+    )
+}
+
+
+function LayoutEffectHook() {
+    useLayoutEffect(() => {
+        console.log('layoutEffect执行')
+    })
+    useEffect(() => {
+        console.log('effect执行');
+    })
+    return (
+        <div>
+            <h1>useLayoutEffect==================</h1>
+
+        </div>
+    )
+}
+
+// 自定义hooks
+const logReducer = (state = [], action) => {
+    switch(action.type) {
+        case 'add':
+            return { num: state.num + 1 }
+            break;
+        case 'del':
+            return { num: state.num - 1 }
+            break;
+        default: 
+            return state
+    }
+}
+// redux中间件，用新的dispatch替代老的dispatch
+function useLogger (reducer, initState) {
+    let [state, dispatch] = useReducer(reducer, initState)
+    function loggerDispatch(action) {
+        console.log(state)
+        dispatch(action)
+    }
+    useEffect(() => console.log('新的状态值', state))
+    return [state, loggerDispatch]
+}
+function UseLoggerHook () {
+    let [state, dispatch] = useLogger(logReducer, {num: 1})
+    return (
+        <div>
+            <h1>useLogger=================</h1>
+            <div>{state.num}</div>
+            <button onClick={() => dispatch({type: 'add'})}>+</button>
+            <button onClick={() => dispatch({type: 'del'})}>-</button>
+        </div>
+    )
+}
 
 export {
     UseStateHooc,
     UseCallbackHooc,
     UseMemoParent,
     UseReducerHook,
-    MyUseStateHook
+    MyUseStateHook,
+    HideUseEffectHook,
+    UseRefParent,
+    LayoutEffectHook,
+    UseLoggerHook
 }
